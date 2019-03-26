@@ -41,6 +41,7 @@ public class WaveVibratorFragment extends Fragment {
   private void init() {
     vibrator = (Vibrator) getActivity().getSystemService( Context.VIBRATOR_SERVICE );
     waveVibratorEdt.setText( "1000 150 300 200" );
+    waveVibratorEdt.setSelection( waveVibratorEdt.getText().toString().length() );
   }
 
   @OnClick(R.id.start_wave_btn) public void startWaveVibrator() {
@@ -69,5 +70,6 @@ public class WaveVibratorFragment extends Fragment {
     waveVibratorEdt.setText(
         waveVibratorEdt.getText() + " " + ((ClipboardManager) getActivity().getSystemService(
             Context.CLIPBOARD_SERVICE )).getText() );
+    waveVibratorEdt.setSelection( waveVibratorEdt.getText().toString().length() );
   }
 }

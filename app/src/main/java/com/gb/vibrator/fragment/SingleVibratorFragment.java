@@ -38,6 +38,7 @@ public class SingleVibratorFragment extends Fragment {
     vibrator = (Vibrator) getActivity().getSystemService( Context.VIBRATOR_SERVICE );
     vibratorTimeEdt.setText( "100" );
     vibratorAmplitudeEdt.setText( "" + VibrationEffect.DEFAULT_AMPLITUDE );
+    vibratorTimeEdt.setSelection( vibratorTimeEdt.getText().toString().length() );
   }
 
   @OnClick(R.id.start_btn) public void startVibrator() {

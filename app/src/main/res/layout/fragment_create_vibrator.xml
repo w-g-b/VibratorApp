@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    android:gravity="center_horizontal"
     >
   <Button
       android:id="@+id/create_vibrator_btn"
@@ -24,18 +24,18 @@
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recycleview"
       android:layout_width="269dp"
-      android:layout_height="0dp"
-      android:layout_weight="1"
+      android:layout_height="464dp"
       android:layout_marginBottom="8dp"
       android:layout_marginEnd="8dp"
       android:layout_marginStart="8dp"
       android:layout_marginTop="20dp"
+      android:layout_weight="1"
       />
   <TextView
       android:id="@+id/textView3"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginBottom="50dp"
-      android:text="使用说明：\n1.点击按钮添加新的振动\n2.点击某个振动效果可进入编辑页面，对振动\n进行修改"
+      android:text="使用说明：\n1.点击按钮添加新的振动\n2.点击某个振动效果可进入编辑页面，对振动\n进行修改\n3.对话框文本编辑域右上角图标功能为格式化\n文本"
       />
 </LinearLayout>

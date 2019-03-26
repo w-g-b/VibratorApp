@@ -99,7 +99,14 @@ public class VibratorEditDialog extends AppCompatDialog {
   }
 
   @OnClick(R.id.format_btn) public void formatEdt() {
-    vibratorTa.setText( StringUtils.formatStr( vibratorTa.getText().toString() ) );
+    String str = vibratorTa.getText().toString();
+    if (StringUtils.isNumOrSpace( str )) {
+      str = StringUtils.formatStr( str );
+      vibratorTa.setText( str );
+      vibratorTa.setSelection( str.length() );
+    } else {
+      Toast.makeText( getContext(), "数据有误，无法格式化", Toast.LENGTH_SHORT ).show();
+    }
   }
 
   public interface OnSaveListener {

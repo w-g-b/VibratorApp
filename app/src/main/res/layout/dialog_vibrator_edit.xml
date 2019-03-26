@@ -49,7 +49,7 @@
         android:id="@+id/vibrator_ta"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/textarea_bg"
+        android:background="@drawable/bg_ta_create"
         android:ems="10"
         android:gravity="top"
         android:inputType="textMultiLine"

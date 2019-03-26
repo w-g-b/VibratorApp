@@ -1,5 +1,6 @@
 package com.gb.vibrator.fragment;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,10 +41,32 @@ public class CreateVibratorFragment extends Fragment {
     mList = DaoUtils.getAllData();
     recyclerView.setLayoutManager( new LinearLayoutManager( getContext() ) );
     mAdapter = new VibratorDataAdapter( getActivity(), mList );
+    mAdapter.setOnItemClickListener( new VibratorDataAdapter.OnItemClickListener() {
+      @Override public void onItemClick(View view, int position) {
+        VibratorEditDialog dialog = new VibratorEditDialog( getActivity(), (VibratorData data) -> {
+          //添加数据
+          data.setId( mList.get( position ).getId() );
+          DaoUtils.updateData( data );
+          mAdapter.updateData( position, data );
+        } );
+        dialog.show();
+        dialog.updateUIData( mList.get( position ) );
+      }
+    } );
+    mAdapter.setOnLongClickListener(
+        (view, position) -> new AlertDialog.Builder( getContext() ).setTitle( "删除该数据？" )
+            .setCancelable( true )
+            .setPositiveButton( "确定", (dialog, which) -> {
+              DaoUtils.deleteById( mList.get( position ).getId() );
+              mAdapter.removeData( position );
+            } )
+            .setNegativeButton( "取消", (dialog, which) -> dialog.dismiss() )
+            .create()
+            .show() );
     recyclerView.setAdapter( mAdapter );
   }
 
-  @OnClick(R.id.create_vibrator_btn) public void createVibratorData() {
+  @OnClick(R.id.create_vibrator_btn) public void createVibratorEditDialog() {
     VibratorEditDialog dialog = new VibratorEditDialog( getActivity(), (VibratorData data) -> {
       //添加数据
       DaoUtils.insertData( data );
@@ -52,10 +75,10 @@ public class CreateVibratorFragment extends Fragment {
     dialog.show();
     //VibratorData data = new VibratorData();
     //data.setTitle( "微信振动" );
-    //data.setData( "1000 160 300 200" );
+    //data.updateUIData( "1000 160 300 200" );
     //data.setRepeat( false );
     //data.setTitle( "节奏振动" );
-    //data.setData( "1000 220 180 220 180 140" );
+    //data.updateUIData( "1000 220 180 220 180 140" );
     //data.setRepeat( true );
   }
 }

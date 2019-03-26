@@ -19,11 +19,13 @@ import java.util.List;
 /**
  * Create by wgb on 2019/3/25.
  */
-public class VibratorDataAdapter extends RecyclerView.Adapter<VibratorDataAdapter.ViewHolder> {
+public class VibratorDataAdapter extends RecyclerView.Adapter<VibratorDataAdapter.ViewHolder>
+    implements View.OnClickListener, View.OnLongClickListener {
   private List<VibratorData> mVibratorDataList;
   private Context mContext;
-
   private Vibrator mVibrator;
+  private OnItemClickListener mOnItemClickListener;
+  private OnLongClickListener mOnLongClickListener;
 
   public VibratorDataAdapter(Context context, List<VibratorData> vibratorDataList) {
     mContext = context;
@@ -44,6 +46,15 @@ public class VibratorDataAdapter extends RecyclerView.Adapter<VibratorDataAdapte
     notifyDataSetChanged();
   }
 
+  //更新数据
+  public void updateData(int position, VibratorData data) {
+    VibratorData vibratorData = mVibratorDataList.get( position );
+    vibratorData.setTitle( data.getTitle() );
+    vibratorData.setData( data.getData() );
+    vibratorData.setRepeat( data.getRepeat() );
+    notifyItemChanged( position );
+  }
+
   static class ViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.serial_number_tx) TextView serialNumberTx;
@@ -61,11 +72,27 @@ public class VibratorDataAdapter extends RecyclerView.Adapter<VibratorDataAdapte
     View view = LayoutInflater.from( parent.getContext() )
         .inflate( R.layout.recycle_item_vibrator, parent, false );
     ViewHolder holder = new ViewHolder( view );
+    view.setOnClickListener( this );
+    view.setOnLongClickListener( this );
     return holder;
+  }
+
+  @Override public void onClick(View v) {
+    if (mOnItemClickListener != null) {
+      mOnItemClickListener.onItemClick( v, (int) v.getTag() );
+    }
+  }
+
+  @Override public boolean onLongClick(View v) {
+    if (mOnLongClickListener != null) {
+      mOnLongClickListener.onLongClick( v, (int) v.getTag() );
+    }
+    return false;
   }
 
   @Override public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     VibratorData vibratorData = mVibratorDataList.get( position );
+    holder.itemView.setTag( position );
     holder.serialNumberTx.setText( position + 1 + ". " );
     holder.title.setText( vibratorData.getTitle() );
     holder.startBtn.setOnClickListener( (View view) -> {
@@ -85,5 +112,21 @@ public class VibratorDataAdapter extends RecyclerView.Adapter<VibratorDataAdapte
 
   @Override public int getItemCount() {
     return mVibratorDataList.size();
+  }
+
+  public interface OnItemClickListener {
+    void onItemClick(View view, int position);
+  }
+
+  public interface OnLongClickListener {
+    void onLongClick(View view, int position);
+  }
+
+  public void setOnItemClickListener(OnItemClickListener listener) {
+    mOnItemClickListener = listener;
+  }
+
+  public void setOnLongClickListener(OnLongClickListener listener) {
+    mOnLongClickListener = listener;
   }
 }

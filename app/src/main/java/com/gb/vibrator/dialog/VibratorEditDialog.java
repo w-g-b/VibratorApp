@@ -38,6 +38,12 @@ public class VibratorEditDialog extends AppCompatDialog {
     mListener = listener;
   }
 
+  public void updateUIData(VibratorData data) {
+    titleEtx.setText( data.getTitle() );
+    vibratorTa.setText( data.getData() );
+    repeatCb.setChecked( data.getRepeat() );
+  }
+
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate( savedInstanceState );
     requestWindowFeature( Window.FEATURE_NO_TITLE );

@@ -50,6 +50,12 @@ public class DaoUtils {
     vibratorDataDao.update( vibratorData );
   }
 
+  public static void updateData(VibratorData vibratorData) {
+    VibratorDataDao vibratorDataDao = getVibratorDataDao();
+    vibratorDataDao.update( vibratorData );
+
+  }
+
   //查
   public static List<VibratorData> getAllData() {
     return getVibratorDataDao().queryBuilder()

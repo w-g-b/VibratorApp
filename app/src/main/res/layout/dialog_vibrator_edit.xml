@@ -4,51 +4,64 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <LinearLayout
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      >
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        >
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignLeft="@+id/title_etx"
-          android:text="标题:  "
-          />
-      <EditText
-          android:id="@+id/title_etx"
-          android:layout_width="150dp"
-          android:layout_height="wrap_content"
-          android:cursorVisible="false"
-          />
-      <ImageView
-          android:id="@+id/close_btn"
-          android:layout_width="25dp"
-          android:layout_height="25dp"
-          android:layout_alignParentEnd="true"
-          android:layout_gravity="center_vertical"
-          android:layout_marginLeft="25dp"
-          android:src="@mipmap/btn_close"
-          />
-    </LinearLayout>
+        android:layout_alignLeft="@+id/title_etx"
+        android:text="标题:  "
+        />
+    <EditText
+        android:id="@+id/title_etx"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        />
+    <ImageView
+        android:id="@+id/close_btn"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="25dp"
+        android:src="@mipmap/btn_close"
+        />
+  </LinearLayout>
   <ImageView
       android:layout_width="match_parent"
       android:layout_height="1dp"
       android:background="#000"
       />
-  <EditText
-      android:id="@+id/vibrator_ta"
+  <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="189dp"
       android:layout_margin="30dp"
       android:layout_marginEnd="8dp"
       android:layout_marginStart="8dp"
       android:layout_marginTop="32dp"
-      android:background="@drawable/textarea_bg"
-      android:ems="10"
       android:gravity="center_horizontal"
-      android:inputType="textMultiLine"
-      />
+      >
+    <EditText
+        android:id="@+id/vibrator_ta"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/textarea_bg"
+        android:ems="10"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        />
+    <ImageView
+        android:id="@+id/format_btn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:src="@mipmap/img_format_brush"
+        />
+  </RelativeLayout>
   <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

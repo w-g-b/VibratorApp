@@ -7,6 +7,7 @@ import android.os.Vibrator;
 import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,17 +63,24 @@ public class VibratorEditDialog extends AppCompatDialog {
 
   @OnClick(R.id.test_vibrator_btn) public void testVibratorBtn() {
     String waveStr = vibratorTa.getText().toString();
-    String[] dataStr = waveStr.split( " " );
-    long[] data = new long[dataStr.length];
-    for (int i = 0; i < dataStr.length; i++) {
-      data[i] = Long.parseLong( dataStr[i] );
+    if (!StringUtils.isNumOrSpace( waveStr )) {
+      Toast.makeText( getContext(), "输入格式有误，请检查", Toast.LENGTH_SHORT ).show();
+      return;
     }
+
+    long[] data = StringUtils.spaceStrToLongArray( waveStr );
     int repeat = repeatCb.isChecked() ? 0 : -1;
     VibrationEffect vibrationEffect = VibrationEffect.createWaveform( data, repeat );
     vibrator.vibrate( vibrationEffect );
   }
 
   @OnClick(R.id.save_btn) public void saveBtn() {
+    String waveStr = vibratorTa.getText().toString();
+    if (!StringUtils.isNumOrSpace( waveStr )) {
+      Toast.makeText( getContext(), "输入格式有误，请检查", Toast.LENGTH_SHORT ).show();
+      return;
+    }
+    waveStr = StringUtils.formatStr( waveStr );
     VibratorData vibratorData = new VibratorData();
     String title = titleEtx.getText().toString();
     if (StringUtils.isEmpty( title )) {
@@ -80,7 +88,7 @@ public class VibratorEditDialog extends AppCompatDialog {
       title = df.format( new Date() );
     }
     vibratorData.setTitle( title );
-    vibratorData.setData( vibratorTa.getText().toString() );
+    vibratorData.setData( waveStr );
     vibratorData.setRepeat( repeatCb.isChecked() );
     mListener.onClick( vibratorData );
     dismiss();
@@ -88,6 +96,10 @@ public class VibratorEditDialog extends AppCompatDialog {
 
   @OnClick(R.id.stop_vibrator_btn) public void stopVibrator() {
     vibrator.cancel();
+  }
+
+  @OnClick(R.id.format_btn) public void formatEdt() {
+    vibratorTa.setText( StringUtils.formatStr( vibratorTa.getText().toString() ) );
   }
 
   public interface OnSaveListener {

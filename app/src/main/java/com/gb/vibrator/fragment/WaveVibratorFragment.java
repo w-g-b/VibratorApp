@@ -1,5 +1,6 @@
 package com.gb.vibrator.fragment;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.VibrationEffect;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.gb.vibrator.R;
+import com.gb.vibrator.util.StringUtils;
 
 /**
  * Create by wgb on 2019/3/24.
@@ -42,11 +45,12 @@ public class WaveVibratorFragment extends Fragment {
 
   @OnClick(R.id.start_wave_btn) public void startWaveVibrator() {
     String waveStr = waveVibratorEdt.getText().toString();
-    String[] dataStr = waveStr.split( " " );
-    long[] data = new long[dataStr.length];
-    for (int i = 0; i < dataStr.length; i++) {
-      data[i] = Long.parseLong( dataStr[i] );
+    if (!StringUtils.isNumOrSpace( waveStr )) {
+      Toast.makeText( getActivity(), "输入格式有误，请检查", Toast.LENGTH_SHORT ).show();
+      return;
     }
+
+    long[] data = StringUtils.spaceStrToLongArray( waveStr );
     int repeat = checkBox.isChecked() ? 0 : -1;
     VibrationEffect vibrationEffect = VibrationEffect.createWaveform( data, repeat );
     vibrator.vibrate( vibrationEffect );
@@ -54,5 +58,16 @@ public class WaveVibratorFragment extends Fragment {
 
   @OnClick(R.id.stop_wave_btn) public void stopWaveVibrator() {
     vibrator.cancel();
+  }
+
+  @OnClick(R.id.copy_btn) public void copyToClipboard() {
+    ((ClipboardManager) getActivity().getSystemService( Context.CLIPBOARD_SERVICE )).setText(
+        waveVibratorEdt.getText() );
+  }
+
+  @OnClick(R.id.paste_btn) public void pasteToEdt() {
+    waveVibratorEdt.setText(
+        waveVibratorEdt.getText() + " " + ((ClipboardManager) getActivity().getSystemService(
+            Context.CLIPBOARD_SERVICE )).getText() );
   }
 }

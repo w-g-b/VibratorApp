@@ -39,6 +39,9 @@ public class CreateVibratorFragment extends Fragment {
 
   private void init() {
     mList = DaoUtils.getAllData();
+    if (mList == null || mList.size() == 0) {
+      addData();
+    }
     recyclerView.setLayoutManager( new LinearLayoutManager( getContext() ) );
     mAdapter = new VibratorDataAdapter( getActivity(), mList );
     mAdapter.setOnItemClickListener( new VibratorDataAdapter.OnItemClickListener() {
@@ -64,6 +67,21 @@ public class CreateVibratorFragment extends Fragment {
             .create()
             .show() );
     recyclerView.setAdapter( mAdapter );
+  }
+
+  private void addData() {
+    VibratorData data1 = new VibratorData();
+    data1.setTitle( "微信振动" );
+    data1.setData( "1000 160 300 200" );
+    data1.setRepeat( false );
+    VibratorData data2 = new VibratorData();
+    data2.setTitle( "节奏振动" );
+    data2.setData( "1000 220 180 220 180 140" );
+    data2.setRepeat( true );
+    DaoUtils.insertData( data1 );
+    DaoUtils.insertData( data2 );
+    mList.add( data1 );
+    mList.add( data2 );
   }
 
   @OnClick(R.id.create_vibrator_btn) public void createVibratorEditDialog() {

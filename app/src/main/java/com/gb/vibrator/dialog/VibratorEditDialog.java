@@ -41,6 +41,7 @@ public class VibratorEditDialog extends AppCompatDialog {
 
   public void updateUIData(VibratorData data) {
     titleEtx.setText( data.getTitle() );
+    titleEtx.setSelection( data.getTitle().length() );
     vibratorTa.setText( data.getData() );
     repeatCb.setChecked( data.getRepeat() );
   }
@@ -100,6 +101,9 @@ public class VibratorEditDialog extends AppCompatDialog {
 
   @OnClick(R.id.format_btn) public void formatEdt() {
     String str = vibratorTa.getText().toString();
+    if (str.length() == 0) {
+      return;
+    }
     if (StringUtils.isNumOrSpace( str )) {
       str = StringUtils.formatStr( str );
       vibratorTa.setText( str );
@@ -107,6 +111,10 @@ public class VibratorEditDialog extends AppCompatDialog {
     } else {
       Toast.makeText( getContext(), "数据有误，无法格式化", Toast.LENGTH_SHORT ).show();
     }
+  }
+
+  @Override public void show() {
+    super.show();
   }
 
   public interface OnSaveListener {

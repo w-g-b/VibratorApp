@@ -1,6 +1,7 @@
 package com.gb.vibrator;
 
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 import android.view.Window;
 import androidx.annotation.NonNull;
@@ -13,7 +14,6 @@ import com.gb.vibrator.adapter.ViewPagerAdapter;
 import com.gb.vibrator.fragment.CreateVibratorFragment;
 import com.gb.vibrator.fragment.SingleVibratorFragment;
 import com.gb.vibrator.fragment.WaveVibratorFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
